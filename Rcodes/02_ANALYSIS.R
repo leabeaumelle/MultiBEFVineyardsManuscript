@@ -136,7 +136,7 @@ for(i in 1:length(WhichResponseVar)){
 
 ## 3/ Refit models with log-transformation to improve model fit ---------------
 
-# variables identified from residual diagnostic plot inspection (cf. Rmd file 03_ANALYSIS_01InspectResiduals)
+# variables identified from residual diagnostic plot inspection
 WhichLogTransformed <- df %>% select(BirdRichness, CarabRichness, CollemboRichness, SpiderFoliageRichness, ColeopteraFoliageRichness, HeteropteraFoliageRichness, EwormAbundance, SyrphidAbundance, BeeAbundance, SpiderAbundance, HemipteraFoliageAbundance, HeteropteraFoliageAbundance, EMF_Production, EMF_Regulation, EMF_MeanScMax, EMF_MeanZscore, EMF_Thresh70, YieldRealised_hlperha, SoilC, SoilPhosphatase, PredRatePupae, PathogenDamage, PestDamage) %>% colnames()
 
 
@@ -206,7 +206,7 @@ plotResiduals(res, df$HedgeRows[!is.na(df$CollemboRichness)])
 hist(df$CollemboRichness)
 hist(log(df$CollemboRichness+(1-min(df$CollemboRichness, na.rm = T))))
 
-## Heteroptera: difficult, but in the end, normal model has singulaarity issue
+## Heteroptera: difficult, but normal model has singularity issue
 mod <- readRDS("Output/Models_1OrgLandscape/LogTransformed/ModelResults_LogHeteropteraFoliageRichness.rds")
 
 res <- simulateResiduals(mod)
@@ -340,50 +340,6 @@ for (i in 1:length(WhichResponseVar)){
   saveRDS(mod, file=mypath4)
   
 }
-
-## 4b/ Check Carabs model with sampling effort---------
-
-# for carabs: uneven sampling effort
-plot(df$CarabRichness~df$CarabN)
-
-# load final model for carabds
-modCarabfinal <- readRDS("Output/Models_1OrgLandscape/ModelResults_CarabRichness.rds")
-summary(modCarabfinal)
-
-# categories of sample sizes
-dfa <- df
-dfa$CarabNfactor <- factor(ifelse(dfa$CarabN < 6, "C : 2-4 pitfalls", 
-                                  ifelse(dfa$CarabN %in% c(6, 7), "B : 6-7 pitfalls", 
-                                         "A : 8 pitfalls")))
-
-# exploratory plots
-plot(dfa$CarabRichness~dfa$CarabNfactor)
-plot(dfa$CarabAbundance~dfa$CarabNfactor)
-
-plot(dfa$Organic~dfa$CarabNfactor)
-plot(dfa$SemiNatural~dfa$CarabNfactor)
-plot(dfa$Dist.snh~dfa$CarabNfactor)
-
-# fit model with sampling effort
-dfa$landcompo <- df$SemiNatural
-dfa$landconfig <- df$Dist.snh
-dfa$LandscapeID <- as.factor(dfa$LandscapeID)
-
-a <- 1-min(dfa$CarabRichness, na.rm = TRUE)
-
-modCarabtest <- lmer(log(CarabRichness+a)~ Organic * landcompo + Organic * landconfig +  CarabNfactor +  (1 | LandscapeID), data = dfa)
-
-Anova(modCarabtest)
-
-anova(modCarabtest, modCarabfinal)
-
-# compare organic farming effects
-get_model_data(modCarabtest, type = "std")
-get_model_data(modCarabfinal, type = "std")
-
-## does not change the results massively, and will be annoying to exttract comparable coefficients for organic effects, laeve it for now. 
-
-
 
 
 ## 5/ Inspect residuals of final models ----------------------------
@@ -654,7 +610,7 @@ write.csv(magres, "Output/Models_1OrgLandscape/ModelResults_MagnitudePredictEffe
 
 ## 9/ Sensitivity analysis ---------
 
-## 1/ Weighted multidiv ----------------------------------
+### 1/ Weighted multidiv ----------------------------------
 
 source("Rcodes/FUN_MultiDivFunction_Allan2014.R")  # multidiv/multifun function
 
@@ -706,7 +662,7 @@ get_model_data(mod2, type = "std")[1, c(1:5)];esdata[1:17,]
 # std estimate is a bit lower for weighted multidiv but similar order of magnitude and results obtained.
 
 
-## 2/ Test for spatial correlations ----------------------------------
+### 2/ Test for spatial correlations ----------------------------------
 
 library(gstat)
 library(sp)
@@ -754,8 +710,6 @@ for (i in 1:length(WhichVar)){
   dev.off()
   
 }
-
-
 
 
 
@@ -1237,7 +1191,7 @@ plotResiduals(res, dfa$landcompo)
 plotResiduals(res, dfa$landconfig)
 plotResiduals(res, dfa$Organic)  # heterogeneity
 
-bartlett.test(df$EMF_Soil, df$Organic)  # bartlett indicates simimar variances
+bartlett.test(df$EMF_Soil, df$Organic)  # bartlett indicates similar variances
 bartlett.test(resid(mod), df$Organic)  # no significant deviation
 
 # test if relationship with production is significant
@@ -1472,23 +1426,6 @@ drop1(modsimpler7, test = "Chisq")
 # save the model
 saveRDS(mod, "Output/Models_2ProductionTradeoffs/ModelResults_MA_MeanScMax.rds")
 
-# # solve variance heterogeneity: cannot be done with random effects
-# mod2 <- gls(respvar~Organic*landcompo+ Organic*landconfig+ Organic*EMF_Production, data = dfa, weights = varIdent(form =~1|Organic))
-# 
-# 
-# # inspect residuals
-# res <- simulateResiduals(mod2)
-# plot(res)
-# 
-# plotResiduals(res, dfa$landcompo)
-# plotResiduals(res, dfa$landconfig)
-# plotResiduals(res, dfa$Organic)  # heterogeneity
-# 
-# # influence of varident structure
-# mod2.0 <- lm(respvar~Organic*landcompo+ Organic*landconfig+ Organic*EMF_Production, data = dfa)
-# 
-# anova(mod2.0, mod2)
-
 
 # compare results with yield as explaining variable instead of index of production
 ggplot(df, aes(x=YieldRealised_hlperha, y = MA_MeanScMax, col = Organic))+
@@ -1537,7 +1474,7 @@ plot_model(modsimpler4, type = "pred", terms = c("YieldRealised_hlperha", "Organ
 Anova(modsimpler4)
 
 
-#' @ inspect residuals
+# inspect residuals
 res <- simulateResiduals(modsimpler4)
 plot(res)
 
@@ -1689,10 +1626,10 @@ pairs(df %>% select(synergyBP, SemiNatural, Shannon, SprayingFreq, MowingFreq, Q
 })
 
 
-# issue is that we have a NA for management practicies for plot 16B: it is a 0 (no synergy)
+# a NA for management practices for plot 16B: it is a 0 (no synergy)
 table(df$synergyBP[!is.na(df$TillageFreq)])
 
-# variables selected based on PCA and parcimony: SNH, tillage, mowing and spraying freqs, fungicides and insecticides amounts
+# variables selected based on PCA and parsimony: SNH, tillage, mowing and spraying freqs, fungicides and insecticides amounts
 
 # a mixed model : singular because landscape already in the fixed effects
 modnull <- glm(synergyBP ~ 1, data= df[!is.na(df$TillageFreq),], family = binomial)
@@ -1808,7 +1745,7 @@ plotResiduals(res2, df$Shannon[!is.na(df$TillageFreq)]) # pattern
 plotResiduals(res2, df$Edge[!is.na(df$TillageFreq)])
 plotResiduals(res2, df$HedgeRows[!is.na(df$TillageFreq)])
 plotResiduals(res2, df$NoAI[!is.na(df$TillageFreq)])
-plotResiduals(res2, df$Organic[!is.na(df$TillageFreq)]) # not pattern
+plotResiduals(res2, df$Organic[!is.na(df$TillageFreq)]) # no pattern
 plotResiduals(res2, df$InterRowManagement[!is.na(df$TillageFreq)])  
 plotResiduals(res2, df$VineVariety[!is.na(df$TillageFreq)])  
 plotResiduals(res2, df$NoAI_Insecticide[!is.na(df$TillageFreq)])  

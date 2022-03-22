@@ -10,7 +10,8 @@ source("Rcodes/FUN_MultiDivFunction_Allan2014.R")  # multidiv/multifun function
 LocalManagementData <- read.csv("Data/LocalManagement_clean.csv")
 LandData <- read.csv("Data/LandscapeMetrics_clean.csv")
 
-# diversity (richness and abundance data). The taxonomic resolution  is species, genus or family depending on the taxa group (see the detailed methodology in Supplementary information associated with the manuscript and in the metadata provided in Data/METADATA.xlsx)
+# diversity (richness and abundance data). 
+# The taxonomic resolution  is species, genus or family depending on the taxa group (see the detailed methodology in Supplementary information associated with the manuscript and in the metadata provided in Data/METADATA.xlsx)
 BirdData <- read.csv("Data/BirdData.csv")
 BirdData <- BirdData[,-1]
 ButterfliesData <- read.csv("Data/ButterfliesData.csv")
@@ -68,6 +69,7 @@ PathogenData <- read.csv("Data/PathogenDamageData_clean.csv")
 PathogenData <- PathogenData[,-1]
 PestData <- read.csv("Data/PestDamageData_clean.csv")
 PestData <- PestData[,-1]
+
 
 # 2. Calculate multidiversity -----------------------------
 # join multiple df with dplyr::left join and base R Reduce
@@ -127,11 +129,12 @@ MultifunData <- data.frame(
   PlotID = FunctionData$PlotID,
   
   # one EMF per ecosystem service
-  EMF_Production = multidiv(Multifun %>% select(YieldRealised_hlperha, Ntester))[,1],
-  EMF_Soil = multidiv(Multifun %>% select(contains("Decompo"), contains("Soil")))[,1],
-  EMF_Regulation = multidiv(Multifun %>% select(PathogenLackOf, PestLackOf, contains("Pred")))[,1],
+  EMF_Production = multidiv(Multifun %>% select(YieldRealised_hlperha, Ntester))[,1],  # Wine production
+  EMF_Soil = multidiv(Multifun %>% select(contains("Decompo"), contains("Soil")))[,1],  # Soil quality
+  EMF_Regulation = multidiv(Multifun %>% select(PathogenLackOf, PestLackOf, contains("Pred")))[,1],  # Natural pest control
   
   EMF_N = multidiv(Multifun)[,2])
+
 
 # Overall EMF giving equal weight to each of three ecosystem services considered
 MultifunData <- MultifunData %>% 
