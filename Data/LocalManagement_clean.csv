@@ -1,0 +1,39 @@
+"","CountryID","LandscapeID","FieldID","PlotID","X","Y","CoordinatesFormat","VineVariety","Organic","InterRowManagement","CoverCropType","TillageFreq","MowingFreq","SprayingFreq","SprayingFreq_Herbicide","SprayingFreq_Fungicide","SprayingFreq_Insecticide","QuantityAI_kgAIha","QuantityHerbicide","QuantityFungicide","QuantityInsecticide","NoAI","NoAI_Herbicide","NoAI_Fungicide","NoAI_Insecticide"
+"1","F","01","01B","01B",452190,6400790,"utm","Sauvignon blanc","Organic","intermediate","spontaneous vegetation",6,3,11,0,11,3,38.681225,0,38.59748,0.083745,5,0,4,1
+"2","F","01","01C","01C",452203,6400977,"utm","Merlot","Conventional","intermediate","spontaneous vegetation",5,10,17,4,10,3,22.41359974,2.78532974,19.56462,0.06365,24,3,18,3
+"3","F","02","02B","02B",451691,6399631,"utm","Merlot","Organic","intermediate","spontaneous vegetation",6,3,11,0,11,3,38.681225,0,38.59748,0.083745,5,0,4,1
+"4","F","02","02C","02C",451806,6399592,"utm","Merlot","Conventional","intermediate","spontaneous vegetation",7,5,10,1,9,2,18.00465,0.2475,17.73215,0.025,25,3,21,1
+"5","F","03","03B","03B",449865,6398984,"utm","Merlot","Organic","intermediate","spontaneous vegetation",6,3,11,0,11,3,38.681225,0,38.59748,0.083745,5,0,4,1
+"6","F","03","03C","03C",449494,6398844,"utm","Merlot","Conventional","intermediate","spontaneous vegetation",4,7,15,3,10,3,22.4544263389,3.2863831389,19.0445932,0.12345,21,2,16,3
+"7","F","04","04B","04B",451198,6399112,"utm","Malbec","Organic","intermediate","spontaneous vegetation",6,3,11,0,11,3,38.681225,0,38.59748,0.083745,5,0,4,1
+"8","F","04","04C","04C",451286,6399051,"utm","Merlot","Conventional","non-tilled","spontaneous vegetation",0,2,12,2,10,3,19.530905,0.6205,18.844405,0.066,24,4,18,2
+"9","F","05","05B","05B",450850,6400626,"utm","Merlot","Organic","intermediate","spontaneous vegetation",4,6,12,0,11,1,25.78378,0,25.76518,0.0186,4,0,3,1
+"10","F","05","05C","05C",450681,6400569,"utm","Merlot","Conventional","non-tilled","spontaneous vegetation",0,5,10,3,7,2,20.40259,1.9075,18.15159,0.3435,19,3,14,2
+"11","F","06","06B","06B",446417,6410176,"utm","Sauvignon blanc","Organic","intermediate","spontaneous vegetation",5,2,13,0,10,3,34.6337,0,34.55,0.0837,3,0,2,1
+"12","F","06","06C","06C",446373,6410210,"utm","Merlot","Conventional","non-tilled","spontaneous vegetation",0,4,10,1,7,3,14.686828,0.286235,14.327493,0.0731,19,2,15,2
+"13","F","07","07B","07B",445773,6419007,"utm","Sauvignon blanc","Organic","intermediate","spontaneous vegetation",2,3,15,0,14,3,21.100452,0,21,0.100452,4,0,2,2
+"14","F","07","07C","07C",445898,6419015,"utm","Sauvignon blanc","Conventional","intermediate","spontaneous vegetation",2,7,13,1,10,2,26.07044997,1.08214997,24.9733,0.015,18,2,15,1
+"15","F","08","08B","08B",464099,6427361,"utm","Merlot","Organic","intermediate","spontaneous vegetation",3,2,8,0,8,0,26.93635,0,26.93635,0,3,0,3,0
+"16","F","08","08C","08C",464128,6427239,"utm","Merlot","Conventional","intermediate","spontaneous vegetation",6,5,13,2,11,2,31.54263,2.025,29.42838,0.08925,18,1,15,2
+"17","F","09","09B","09B",462648,6428118,"utm","Merlot","Organic","intermediate","spontaneous vegetation",3,3,16,0,16,0,55.205,0,55.205,0,3,0,3,0
+"18","F","09","09C","09C",462527,6428448,"utm","Merlot","Conventional","intermediate","spontaneous vegetation",4,6,15,2,12,2,32.95445,1.49205,31.4339,0.0285,22,3,18,1
+"19","F","10","10B","10B",463042,6429702,"utm","Merlot","Organic","intermediate","spontaneous vegetation",3,4,12,0,12,0,46.689,0,46.689,0,3,0,3,0
+"20","F","10","10C","10C",462812,6429401,"utm","Merlot","Conventional","non-tilled","spontaneous vegetation",0,6,10,2,7,2,18.50539,1.332,17.14414,0.02925,15,1,12,2
+"21","F","11","11B","11B",462432,6430853,"utm","Merlot","Organic","intermediate","spontaneous vegetation",3,1,12,0,12,0,15.1222,0,15.1222,0,4,0,4,0
+"22","F","11","11C","11C",462302,6430840,"utm","Merlot","Conventional","non-tilled","spontaneous vegetation",0,4,11,1,10,0,26.53802,0.486,26.05202,0,9,1,8,0
+"23","F","12","12B","12B",461357,6431891,"utm","Merlot","Organic","non-tilled","spontaneous vegetation",0,5,11,0,11,1,17.3854,0,17.3575,0.0279,5,0,4,1
+"24","F","12","12C","12C",461413,6431968,"utm","Merlot","Conventional","intermediate","spontaneous vegetation",5,3,10,1,9,1,64.0434998,0.9715998,63.0569,0.015,12,1,10,1
+"25","F","13","13B","13B",460242,6431147,"utm","M CS CF","Organic","intermediate","spontaneous vegetation",3,3,11,0,11,0,38.88688,0,38.88688,0,3,0,3,0
+"26","F","13","13C","13C",460333,6431211,"utm","Merlot","Conventional","intermediate","spontaneous vegetation",5,3,12,0,12,1,40.19589,0,40.18164,0.01425,20,0,19,1
+"27","F","14","14B","14B",458124,6424045,"utm","Merlot","Organic","intermediate","spontaneous vegetation",4,5,10,0,9,1,38.4589,0,38.431,0.0279,5,0,4,1
+"28","F","14","14C","14C",458220,6424248,"utm","Merlot","Conventional","intermediate","spontaneous vegetation",4,5,13,1,10,3,27.4359,1.44,25.89615,0.09975,20,1,16,3
+"29","F","16","16B","16B",455669,6424374,"utm","Merlot","Organic","NA","spontaneous vegetation",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"30","F","16","16C","16C",455637,6424546,"utm","Merlot","Conventional","intermediate","spontaneous vegetation",3,3,14,3,9,2,29.5816,1.47,28.0771,0.0345,17,2,13,2
+"31","F","17","17B","17B",449902,6426862,"utm","Merlot","Organic","tilled","spontaneous vegetation",1,3,10,0,10,0,29.0394375,0,29.0394375,0,3,0,3,0
+"32","F","17","17C","17C",449948,6426859,"utm","Cabernet Franc","Conventional","non-tilled","spontaneous vegetation",0,5,12,0,10,2,16.573935,0,16.491435,0.0825,18,0,16,2
+"33","F","18","18B","18B",454195,6432191,"utm","Merlot","Organic","intermediate","spontaneous vegetation",3,2,15,0,15,0,44.1326,0,44.1326,0,4,0,4,0
+"34","F","18","18C","18C",454062,6432182,"utm","Merlot","Conventional","intermediate","spontaneous vegetation",4,3,12,2,9,1,35.89911946,2.62331946,33.2383,0.0375,17,1,15,1
+"35","F","20","20B","20B",449617,6434027,"utm","Merlot","Organic","intermediate","spontaneous vegetation",6,2,13,0,13,0,41.57365,0,41.57365,0,3,0,3,0
+"36","F","20","20C","20C",449712,6433928,"utm","Merlot","Conventional","intermediate","spontaneous vegetation",4,1,11,1,9,1,26.721751965,1.029174965,25.679657,0.01292,16,1,14,1
+"37","F","21","21B","21B",445872,6434387,"utm","Merlot","Organic","tilled","spontaneous vegetation",2,2,9,0,9,0,23.58468,0,23.58468,0,3,0,3,0
+"38","F","21","21C","21C",446029,6434487,"utm","Merlot","Conventional","intermediate","spontaneous vegetation",8,0,7,0,7,1,18.4228,0,18.3928,0.03,12,0,11,1
