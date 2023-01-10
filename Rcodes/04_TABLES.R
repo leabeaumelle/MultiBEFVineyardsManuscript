@@ -39,29 +39,45 @@ WhichResponseVar <- c(
 
 ## Raw data tables -----------------------------------------
 
+# load data
+datayear <- import("Data/Bacchus/Caractéristiques_Bacchus_2019.xlsx")
+df <- read.csv("Output/MultiDiversity_ForAnalysis.csv")
+
+df <- left_join(df, datayear, by = c("PlotID" = "Vineyard_code"))
+df <- df[,-c(1:3, 5, 7,8)]
+
+df <- df %>% dplyr::rename(VineDensity = `vine_density (vine/ha)`, 
+                           PlantingYear = `planting_year`)
+
+df$PlantingYear[df$PlantingYear=="ND"] <- NA
+df$PlantingYear <- as.numeric(df$PlantingYear)
+df$VineyardAge <- 2019-df$PlantingYear
+
 # make table showing mean and SD values of local and landscape variables
-WhichVars <- c("TillageFreq", "MowingFreq", "SprayingFreq", "QuantityFungicide", "QuantityHerbicide", "QuantityInsecticide")
+WhichVars <- c("TillageFreq", "MowingFreq", "SprayingFreq", "QuantityFungicide", "QuantityHerbicide", "QuantityInsecticide", "VineDensity", "VineyardAge")
 
 # means and sd conventional
 df_conv <- df[df$Organic=="Conventional",c(WhichVars)]
 
-tab_conv <- cbind(
-  apply(df_conv[!is.na(df_conv$TillageFreq),], 2, mean),
-  apply(df_conv[!is.na(df_conv$TillageFreq),], 2, sd), 
-  apply(df_conv[!is.na(df_conv$TillageFreq),], 2, min),
-  apply(df_conv[!is.na(df_conv$TillageFreq),], 2, max))
+tab_conv1 <- cbind(
+  apply(df_conv, 2, mean, na.rm = TRUE),
+  apply(df_conv, 2, sd, na.rm = TRUE),
+  apply(df_conv, 2, min, na.rm = TRUE),
+  apply(df_conv, 2, max, na.rm = TRUE))
 
 # means and sd conventional
 df_org <- df[df$Organic=="Organic",c(WhichVars)]
 
-tab_org <- cbind(
-  apply(df_org[!is.na(df_org$TillageFreq),], 2, mean),
-  apply(df_org[!is.na(df_org$TillageFreq),], 2, sd),
-  apply(df_org[!is.na(df_org$TillageFreq),], 2, min),
-  apply(df_org[!is.na(df_org$TillageFreq),], 2, max))
+tab_org1 <- cbind(
+  apply(df_org, 2, mean, na.rm = TRUE),
+  apply(df_org, 2, sd, na.rm = TRUE),
+  apply(df_org, 2, min, na.rm = TRUE),
+  apply(df_org, 2, max, na.rm = TRUE))
 
 # final table
-TableSupp1 <- cbind(tab_conv, tab_org)
+TableSupp1 <- cbind(tab_conv1, tab_org1)
+TableSupp1
+
 
 write.csv(TableSupp1, "Tables/RawDataLocalManag.csv")
 
@@ -365,11 +381,5 @@ Anova(modRE);Anova(modNoRE)
 # compare the estimates: they are identical
 modRE; modNoRE
 
-# manuscript will only show results from model with RE for philosophical reasons (keep RE structure to reflect the study design)
-
-# # save Anova table
-# write.csv(as.data.frame(Anova(modRE)), "Tables/Model2_Tradeoffs_ANOVAres_MultiAb_updated.csv")
-# 
-# # save multiabundance model results in a html table for supplementary information, but for gls, no R2
-# tab_model(mod, file = "Tables/Model2_Tradeoffs_ESTIMATESres_MultiAb_updated.html")
+# manuscript will only show results from model with RE to reflect the study design
 

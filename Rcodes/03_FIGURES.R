@@ -733,24 +733,75 @@ library(ggplot2)
 library(patchwork)
 
 
-## Load Data -----------
+# Supplement PCA local and landscape variables - Supp Figure ----------------------------
+
+### Functions -----------
+library(ggbiplot)
+library(dplyr)
+library(lme4)
+library(DHARMa)
+library(car)
+library(sjPlot)
+library(vegan)
+library(nlme)
+library(ggplot2)
+library(patchwork)
+
+### Load Data -----------
 df <- read.csv("Output/MultiDiversity_ForAnalysis.csv")
 df <- df[,-c(1:2)]
 
 # Shannon
 df$Shannon <- diversity(df %>% select(Crops, Grasslands, Forests, Vineyards, GrassStrips, HedgeRows, SoftPaths, Artificial, Water, Others), index = "shannon")
 
+# Key landscape management variables: 
+WhichLandVars <- c("Shannon", "Edge",
+                   "SemiNatural", "Dist.snh", "Vineyards", "Artificial",
+                   "Crops", "Grasslands", "Forests", "GrassStrips", "HedgeRows", "Water")
+
+dfa <- df
+dfa <- dfa %>% select(WhichLandVars)
+rownames(dfa) <- dfa$PlotID
+
+# PCA
+PCA <- rda(dfa , scale = TRUE)
+
+barplot(as.vector(PCA$CA$eig)/sum(PCA$CA$eig))
+
+# Calculate percent of variance explained by the two first axes
+sum((as.vector(PCA$CA$eig)/sum(PCA$CA$eig))[1:2]) # 55%,
+sum((as.vector(PCA$CA$eig)/sum(PCA$CA$eig))[1:3]) # 68%
+sum((as.vector(PCA$CA$eig)/sum(PCA$CA$eig))[1:4]) # 78%
+
+# Find summarizing vars
+sort(PCA$CA$v[,"PC1"]) # A1: SNH, Shannon, Forests, Grasslands VS. Vineyards and Edge density (36%)
+sort(PCA$CA$v[,"PC2"]) # A2: Hedge rows, artificial and crops VS. distance to near SNH (16%)
+sort(PCA$CA$v[,"PC3"]) # A3: Water, grass strips, edhe density VS. Forests and distance to SNH (11%)
+
+## PCA landscape metrics -----------
+mycols <- viridis_pal(option = "A")(6)[c(2, 5)]
+plot.pca <- prcomp(dfa, scale. = TRUE)
+P1 <- ggbiplot(plot.pca, obs.scale = 1, var.scale = 1,
+               groups = df$Organic, ellipse = TRUE, circle = TRUE) +
+  scale_fill_manual(name = 'Organic',values=mycols)+
+  scale_color_manual(name = 'Organic', values = mycols) +
+  scale_shape_manual(name = 'Organic',values = c(21,24))+
+  geom_point(aes(fill=df$Organic, shape=df$Organic), size = 3) +
+  theme_bw()+
+  theme(legend.position = 'none')
+
+
+# # Make correlation table
+# cor(dfa)
+# # save table for supplement 
+# write.csv(cor(dfa), "Tables/CorrelationsLandscape.csv")
 
 # Key local management variables: 
 WhichLocalVars <- c("TillageFreq", "MowingFreq", "SprayingFreq", "QuantityFungicide", "QuantityInsecticide", "QuantityHerbicide", "NoAI")
 
-# Key landscape management variables: 
-WhichLandVars <- c("Shannon", "Edge",
-                   "SemiNatural", "Dist.snh", "Vineyards")
-
 dfa <- df
+dfa <- dfa %>% select(WhichLocalVars)
 dfa <- dfa[!is.na(dfa$TillageFreq),]
-dfa <- dfa %>% select(WhichLocalVars, WhichLandVars)
 rownames(dfa) <- dfa$PlotID
 
 # rename variables for PCA
@@ -761,45 +812,35 @@ dfa <- dfa %>%
                 Herbicides = QuantityHerbicide,
                 Insecticides = QuantityInsecticide,
                 Fungicides = QuantityFungicide,
-                No.ActiveIngredients = NoAI,
-                SNH = SemiNatural, 
-                Dist.SNH = Dist.snh)
-
-
+                No.ActiveIngredients = NoAI)
 
 # PCA
 PCA <- rda(dfa , scale = TRUE)
 
-## Plot organic vs conventional -----------
+barplot(as.vector(PCA$CA$eig)/sum(PCA$CA$eig))
+
+## PCA local management -----------
 mycols <- viridis_pal(option = "A")(6)[c(2, 5)]
 plot.pca <- prcomp(dfa, scale. = TRUE)
-ggbiplot(plot.pca, obs.scale = 1, var.scale = 1,
-         groups = df$Organic[!is.na(df$TillageFreq)], ellipse = TRUE, circle = TRUE) +
+P2 <- ggbiplot(plot.pca, obs.scale = 1, var.scale = 1,
+               groups = df$Organic[!is.na(df$TillageFreq)], ellipse = TRUE, circle = TRUE) +
   scale_fill_manual(name = 'Organic',values=mycols)+
   scale_color_manual(name = 'Organic', values = mycols) +
   scale_shape_manual(name = 'Organic',values = c(21,24))+
   geom_point(aes(fill=df$Organic[!is.na(df$TillageFreq)], shape=df$Organic[!is.na(df$TillageFreq)]), size = 3) +
-  theme(legend.direction = 'horizontal', legend.position = 'top')+theme_bw()
+  theme_bw()+
+  theme(legend.position = 'right')
 
-
-## save a png with high res ---------
-
-## Supplement figure for multiab
+# save png file with PCA landscape metrics
 ppi <- 300
 
-png("Figures/FigSupp_PCALocalLandscape.png",
-    width=15,
+png("Figures/FigSupp_PCA.png",
+    width=30,
     height=15,
     units = "cm",
     res=ppi)
 
-ggbiplot(plot.pca, obs.scale = 1, var.scale = 1,varname.size = 2.9,
-         groups = df$Organic[!is.na(df$TillageFreq)], ellipse = TRUE, circle = TRUE, alpha = 0.1) +
-  scale_fill_manual(name = 'Organic',values=mycols)+
-  scale_color_manual(name = 'Organic', values = mycols) +
-  scale_shape_manual(name = 'Organic',values = c(21,24))+
-  geom_point(aes(fill=df$Organic[!is.na(df$TillageFreq)], shape=df$Organic[!is.na(df$TillageFreq)]), size = 1.5) +
-  theme(legend.direction = 'horizontal', legend.position = 'top')+theme_bw()
+P1+P2+plot_annotation(tag_levels = "A")
 
 dev.off()
 
