@@ -1,6 +1,6 @@
 READ ME
 
-This is the analysis for manuscript "Biodiversity conservation and organic wine production: a glass half full" Beaumelle et al. 
+This is the analysis for manuscript "Biodiversity conservation, ecosystem services and organic viticulture: A glass half-full" Beaumelle et al. (2023) Agriculture, Ecosystems and Environment.
 
 Study investigates the multidimensional effects of organic farming on 14 taxa groups of plants, arthropods, microbes and birds, and 14 proxies of 3 ecosystem services (wine production, soil quality and natural pest control) in 38 vineyards located in France (Bordeaux region).
 
